@@ -129,7 +129,7 @@ async function parseSitemap(url, filter, force, previousDays) {
   if (!previousDays) {
     previousDays = process.env.PREVIOUS_DAYS || 30
   }
-  if (force !== true) {
+  if (force !== true && force !== 'true') {
     force = null
   }
 
