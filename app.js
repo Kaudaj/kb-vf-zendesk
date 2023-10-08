@@ -226,7 +226,7 @@ async function parseZendeskArticles(url, apiKey) {
       },
     }
     const response = await axios.get(
-      `https://${process.env.ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/help_center/en-us/articles/${number}.json`,
+      `https://${process.env.ZENDESK_SUBDOMAIN}.zendesk.com/api/v2/help_center/fr/articles/${number}.json`,
       headers
     )
 
