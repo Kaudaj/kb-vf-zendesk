@@ -53,10 +53,14 @@ app.post('/api/cron', async (req, res) => {
   const expression = req.body.expression || '0 0 * * *'
   const run = req.body.run || false
   const previousDays = req.body.previousDays || process.env.PREVIOUS_DAYS || 7
+
+  const url = req.body.url || process.env.ZENDESK_SITEMAP || null
+  const force = req.body.force || process.env.ALWAYS_FORCE
+
   let task = cron.schedule(
     expression,
     () => {
-      fetchZendeskArticles(null, false, previousDays)
+      fetchZendeskArticles(url, force, previousDays)
     },
     {
       scheduled: false,
@@ -66,7 +70,7 @@ app.post('/api/cron', async (req, res) => {
   if (run) {
     res.json({ success: true, message: 'PENDING' })
     // Run the fetchZendeskArticles function once before it starts running on the schedule
-    fetchZendeskArticles(null, false, previousDays).then(() => {
+    fetchZendeskArticles(url, force, previousDays).then(() => {
       // Start the cron job after fetchZendeskArticles has run once
       task.start()
     })
